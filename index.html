@@ -1,420 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elixir - A Gorilla Tag Mod Menu</title>
-    <link rel="shortcut icon" href="https://i.ibb.co/ZpLSgh0z/8e81f09fe9db62df034af6692022cc95.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #6a0dad;
-            --primary-dark: #4b0082;
-            --secondary: #1a1a1a;
-            --accent: #9c27b0;
-            --text: #f0f0f0;
-            --text-secondary: #b0b0b0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--secondary);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(106, 13, 173, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(156, 39, 176, 0.1) 0%, transparent 50%);
-        }
-        
-        header {
-            background: linear-gradient(135deg, #2f2138, #101010);
-            padding: 1rem 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 9999;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .logo img {
-            height: 50px;
-            border-radius: 50%;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #fff, #e0e0e0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: #fff;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #fff;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .download-btn {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
-        }
-        
-        .download-btn:hover {
-            background-color: #8e24aa;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6);
-        }
-        
-        .hero {
-            padding: 5rem 2rem;
-            text-align: center;
-            background: linear-gradient(rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.9)), 
-                        url('https://i.ibb.co/ZpLSgh0z/8e81f09fe9db62df034af6692022cc95.png') center/cover no-repeat;
-            position: relative;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero h2 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .secondary-btn {
-            background-color: transparent;
-            color: var(--text);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid var(--primary);
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .secondary-btn:hover {
-            background-color: rgba(106, 13, 173, 0.2);
-            border-color: var(--accent);
-        }
-        
-        .features {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--text);
-            margin-bottom: 1rem;
-        }
-        
-        .section-title p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .discord-cta {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background-color: rgba(88, 101, 242, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(88, 101, 242, 0.3);
-        }
-        
-        .discord-cta a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: #5865F2;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .discord-cta a:hover {
-            background-color: #4752C4;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
-        }
-        
-        footer {
-            background-color: #111;
-            padding: 3rem 2rem 1.5rem;
-            margin-top: auto;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-column h3 {
-            color: #fff;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            position: relative;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-column ul li a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-links a {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .disclaimer {
-            background-color: rgba(255, 0, 0, 0.1);
-            padding: 1rem;
-            border-radius: 5px;
-            border-left: 4px solid red;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elixir Mod Menu</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d0d0d;
+      color: white;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #9b59b6;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 2rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #9b59b6;
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('https://cdn.wallpapersafari.com/36/19/JmVvH7.gif') no-repeat center center/cover;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .download-btn {
+      background: #9b59b6;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .download-btn:hover {
+      background: #8e44ad;
+    }
+
+    .secondary-btn {
+      background: transparent;
+      border: 2px solid #9b59b6;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .secondary-btn:hover {
+      background: #9b59b6;
+      color: white;
+    }
+
+    /* Section */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #9b59b6;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.8);
+      margin-top: 2rem;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="#" style="text-decoration: none; display: flex; gap: 1rem;">
-                <img src="https://i.ibb.co/ZpLSgh0z/8e81f09fe9db62df034af6692022cc95.png" alt="Elixir Logo">
-                <h1>Elixir</h1>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll">Download</a>
-                <a href="https://discord.gg/bkgZHtqunx" target="_blank">Discord</a>
-            </div>
-            <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll"><button class="download-btn">Download Now</button></a>
-        </nav>
-    </header>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Elixir - A Gorilla Tag Mod Menu</h2>
-            <p>Created by @menker, Elixir provides quality modifications for Gorilla Tag. Access the menu in-game by pressing the B button (default).</p>
-            <div class="cta-buttons">
-                <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll"><button class="download-btn">Download</button></a>
-                <a href="https://discord.gg/bkgZHtqunx" class="secondary-btn" target="_blank" style="text-decoration: none;">Join Discord</a>
-            </div>
-        </div>
-    </section>
-    
-    <section class="features" id="features">
-        <div class="section-title">
-            <h2>Features</h2>
-            <p>Current features are listed in our Discord and may be updated here later</p>
-        </div>
-        
-        <div class="discord-cta">
-            <p>For the most up-to-date feature list and support, join our Discord community</p>
-            <a href="https://discord.gg/bkgZHtqunx" target="_blank" style="margin-top: 10px;">
-                <i class="fab fa-discord"></i> Join Discord
-            </a>
-        </div>
-    </section>
-    
-    <section class="download" id="download">
-        <div class="section-title">
-            <h2>Download</h2>
-            <p>Get the latest version of our mod menu</p>
-        </div>
-        
-        <div style="text-align: center; margin-top: 2rem;">
-            <button class="download-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">Download</button>
-            <div class="disclaimer" style="max-width: 600px; margin: 2rem auto;">
-                <p><strong>Disclaimer:</strong> Elixir is a third-party modification for Gorilla Tag. Use at your own risk. We are not affiliated with Another Axiom or Gorilla Tag.</p>
-            </div>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Elixir</h3>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#download">Download</a></li>
-                    <li><a href="https://discord.gg/bkgZHtqunx" target="_blank">Discord</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Information</h3>
-                <ul>
-                    <li><a href="#">Installation Guide - Join Discord For More Info.</a></li>
-                    <li><a href="#">FAQ - Join Discord For More Info.</a></li>
-                    <li><a href="#">Troubleshooting - Join Discord For More Info.</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Connect</h3>
-                <div class="social-links">
-                    <a href="https://discord.gg/bkgZHtqunx" target="_blank"><i class="fab fa-discord"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>Elixir - A Gorilla Tag Mod Menu | Created by @menker | Not affiliated with Gorilla Tag or Another Axiom</p>
-        </div>
-    </footer>
+  <!-- Header -->
+  <header>
+    <div class="logo">Elixir</div>
+    <nav>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="https://discord.gg/bkgZHtqunx" target="_blank">Discord</a></li>
+      </ul>
+    </nav>
+    <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll">
+      <button class="download-btn">Download Now</button>
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Elixir Mod Menu</h1>
+    <p>The most advanced Gorilla Tag mod menu. Powerful, sleek, undetected.</p>
+    <div class="cta-buttons">
+      <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll">
+        <button class="download-btn">Download</button>
+      </a>
+      <a href="https://discord.gg/bkgZHtqunx" class="secondary-btn" target="_blank" style="text-decoration: none;">Join Discord</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Undetected</h3>
+        <p>Bypasses anti-cheat for a seamless experience.</p>
+      </div>
+      <div class="feature">
+        <h3>Sleek UI</h3>
+        <p>Modern and easy-to-navigate interface for fast access.</p>
+      </div>
+      <div class="feature">
+        <h3>Frequent Updates</h3>
+        <p>Stay ahead with regular improvements and new features.</p>
+      </div>
+      <div class="feature">
+        <h3>Community Support</h3>
+        <p>Join our Discord for help, updates, and suggestions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section id="download">
+    <h2>Download Elixir</h2>
+    <p style="text-align: center;">Get the latest version of Elixir below.</p>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://github.com/menker-cs/Elixir/releases/download/Elixir-V1/Elixir.dll">
+        <button class="download-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">Download</button>
+      </a>
+      <div class="disclaimer" style="max-width: 600px; margin: 2rem auto;">
+        <p><strong>Disclaimer:</strong> Elixir is a third-party modification for Gorilla Tag. Use at your own risk. We are not affiliated with Another Axiom or Gorilla Tag.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Elixir. All rights reserved.</p>
+  </footer>
 </body>
-
 </html>
-
-
